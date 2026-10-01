@@ -17,6 +17,9 @@ import { About } from './components/About.js';
 import { Gallery } from './components/Gallery.js';
 import { Services } from './components/Services.js';
 import { Testimonials } from './components/Testimonials.js';
+import { Events } from './components/Events.js';
+import { Policies } from './components/Policies.js';
+import { Faq } from './components/Faq.js';
 import { Contact } from './components/Contact.js';
 import { Footer } from './components/Footer.js';
 
@@ -35,6 +38,63 @@ function favicon() {
   const letter = esc(content.business.name.trim().charAt(0).toUpperCase());
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="${theme.colors.ink}"/><text x="16" y="22.5" font-family="Georgia,serif" font-size="19" fill="${theme.colors.onInk}" text-anchor="middle">${letter}</text></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
+/**
+ * Business details for search engines (schema.org), so Google can show the
+ * address, hours and booking link in local results. Built from content.js.
+ */
+function localBusinessSchema(url) {
+  const { site, business, contact, booking, social, localBusiness: biz } = content;
+  if (!biz) return '';
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': biz.type,
+    name: business.name,
+    description: site.description,
+    url: url || undefined,
+    image: site.ogImage || undefined,
+    telephone: contact.phone,
+    email: contact.email,
+    priceRange: biz.priceRange || undefined,
+    address: biz.address
+      ? {
+          '@type': 'PostalAddress',
+          streetAddress: biz.address.street,
+          addressLocality: biz.address.city,
+          addressRegion: biz.address.region,
+          postalCode: biz.address.postalCode,
+          addressCountry: biz.address.country,
+        }
+      : undefined,
+    openingHoursSpecification: (biz.hours || []).map((h) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: h.days,
+      opens: h.opens,
+      closes: h.closes,
+    })),
+    sameAs: (social || []).map((s) => s.url),
+    potentialAction: booking.url ? { '@type': 'ReserveAction', target: booking.url } : undefined,
+  };
+  // `<` is escaped so no value can close the script tag early.
+  return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+}
+
+/** Analytics tags — only output when an ID is set in content.js (see `analytics`). */
+function analyticsTags() {
+  const { umamiWebsiteId, ga4MeasurementId } = content.analytics || {};
+  const gaId = ga4MeasurementId && JSON.stringify(ga4MeasurementId).replace(/</g, '\\u003c');
+  return [
+    umamiWebsiteId && `<script defer src="https://cloud.umami.is/script.js" data-website-id="${esc(umamiWebsiteId)}"></script>`,
+    gaId && `<script async src="https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(ga4MeasurementId)}"></script>`,
+    gaId && `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',${gaId});</script>`,
+  ];
+}
+
+/** Mark every booking link so analytics can count "Book" taps (see src/scripts/analytics.js). */
+function tagBookingLinks(html) {
+  const href = `href="${esc(content.booking.url)}"`;
+  return html.replaceAll(href, `${href} data-track="book_tap"`);
 }
 
 export function renderHead() {
@@ -61,24 +121,29 @@ export function renderHead() {
     `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
     `<link rel="stylesheet" href="${esc(theme.fonts.googleFontsUrl)}" />`,
     themeStyles(),
+    localBusinessSchema(canonical),
+    ...analyticsTags(),
   ]
     .filter(Boolean)
     .join('\n    ');
 }
 
 export function renderBody() {
-  return [
+  return tagBookingLinks([
     Nav(content),
     `<main id="main">`,
     Hero(content),
     About(content),
     Gallery(content),
     Services(content),
+    Events(content),
     Testimonials(content),
+    Policies(content),
+    Faq(content),
     Contact(content),
     `</main>`,
     Footer(content),
-  ].join('\n');
+  ].join('\n'));
 }
 
 export const lang = content.site.lang || 'en';

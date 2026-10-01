@@ -163,6 +163,53 @@ export const content = {
   },
 
   // --------------------------------------------------------------------------
+  // OPTIONAL SECTIONS — hidden until `enabled: true`. When you switch one on,
+  // also add it to nav.links if it should appear in the menu, e.g.
+  // { label: 'FAQ', href: '#faq' }. Events sits after Services; Policies and
+  // FAQ sit just before Contact.
+  // --------------------------------------------------------------------------
+  events: {
+    enabled: false,
+    label: 'Bridal & events',
+    heading: 'For the big days.',
+    intro: 'Wedding mornings, engagements and special occasions, in the studio or on location.', // TODO: replace with real client content
+    // TODO: replace with real client content — all packages below
+    packages: [
+      { name: 'Bridal trial', price: '$150', description: 'A full run-through of your wedding-day look, about 90 minutes.' },
+      { name: 'Wedding day', price: 'from $250', description: 'Styling on the morning, on location or in the studio.' },
+      { name: 'Bridal party', price: 'from $95 each', description: 'Bridesmaids, mothers and anyone else getting ready with you.' },
+    ],
+    note: 'Travel within 20 miles is included. Dates book up early, so enquire as soon as you can.', // TODO: replace with real client content
+    ctaLabel: 'Enquire about your date', // links to the contact form
+  },
+
+  policies: {
+    enabled: false,
+    label: 'Policies',
+    heading: 'Good to know before you book.',
+    // TODO: replace with real client content — all policies below
+    items: [
+      { title: 'Deposits', text: 'A 25% deposit secures your appointment and comes off your final bill.' },
+      { title: 'Cancellations', text: 'Please give at least 48 hours’ notice to move or cancel. Late cancellations lose the deposit.' },
+      { title: 'Running late', text: 'Arriving more than 15 minutes late may mean a shorter service or a new booking.' },
+      { title: 'Colour services', text: 'New colour clients need a patch test at least 48 hours before their first appointment.' },
+    ],
+  },
+
+  faq: {
+    enabled: false,
+    label: 'FAQ',
+    heading: 'Questions, answered.',
+    // TODO: replace with real client content — all questions below
+    items: [
+      { q: 'Do you offer consultations?', a: 'Yes. Free 15-minute consultations, in person or by video. Book one online or send a message.' },
+      { q: 'How should I arrive?', a: 'With clean, dry hair unless your service includes a wash, plus any inspiration photos you love.' },
+      { q: 'How long will my appointment take?', a: 'Each service lists a typical time. Colour and big changes can run longer, so plan a little extra.' },
+      { q: 'How can I pay?', a: 'All major cards, Apple Pay and cash.' },
+    ],
+  },
+
+  // --------------------------------------------------------------------------
   // CONTACT
   // --------------------------------------------------------------------------
   contact: {
@@ -218,5 +265,34 @@ export const content = {
     copyrightName: 'Hana Mori Hair', // TODO: replace with real client content
     copyrightSuffix: 'All rights reserved.',
     backToTopLabel: 'Back to top',
+  },
+
+  // --------------------------------------------------------------------------
+  // GOOGLE BUSINESS DETAILS — read by search engines, not shown on the page.
+  // Name, phone, email, socials and booking link come from the sections above;
+  // keep the address and hours here in step with Contact and the footer.
+  // Hours use 24-hour times; leave out closed days.
+  // --------------------------------------------------------------------------
+  localBusiness: {
+    type: 'HairSalon', // or 'BeautySalon' for wider beauty services
+    priceRange: '$$', // $ – $$$$
+    // TODO: replace with real client content
+    address: { street: '1520 Placeholder Ave, Suite 3', city: 'Seattle', region: 'WA', postalCode: '98122', country: 'US' },
+    // TODO: replace with real client content
+    hours: [
+      { days: ['Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '10:00', closes: '18:00' },
+      { days: ['Sunday'], opens: '11:00', closes: '16:00' },
+    ],
+  },
+
+  // --------------------------------------------------------------------------
+  // ANALYTICS — counts visitors plus taps on Book, phone and email links.
+  // Off until an ID is filled in. Use one of:
+  //   Umami (umami.is, no cookies)  → the site's Website ID
+  //   Google Analytics 4            → the Measurement ID, e.g. 'G-XXXXXXXXXX'
+  // --------------------------------------------------------------------------
+  analytics: {
+    umamiWebsiteId: '',
+    ga4MeasurementId: '',
   },
 };

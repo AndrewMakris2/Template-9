@@ -39,7 +39,7 @@ src/
     theme.js        ← colors + font families (EDIT PER RESKIN)
     content.js      ← all text, links, services, testimonials, image paths (EDIT PER CLIENT)
   components/       ← one file per section; pure functions, no hardcoded copy/colors
-  scripts/          ← browser JS: mobile menu, gallery lightbox, form submit
+  scripts/          ← browser JS: mobile menu, gallery lightbox, form submit, tap tracking
   styles/main.css   ← maps theme variables to Tailwind utilities (no values here)
   render.js         ← assembles the page from config + components at build time
 public/images/      ← client photos go here
@@ -91,6 +91,32 @@ plain static HTML, which matters for two reasons:
 
 Suggested sizes: hero ~2000px wide, about 900×1125 (4:5), gallery 800×1000
 (4:5) with `full` at ~1600×2000. Compress JPGs before adding them (e.g. squoosh.app).
+
+### Optional sections: bridal & events, policies, FAQ
+
+Three extra sections are built in but hidden. In `content.js`, set
+`enabled: true` on `events`, `policies` or `faq` and fill in its text. Events
+appears after Services; Policies and FAQ appear just before Contact. To list
+one in the menu, add it to `nav.links`, e.g. `{ label: 'FAQ', href: '#faq' }`.
+
+### Google business details
+
+`localBusiness` in `content.js` gives search engines the business type,
+address, opening hours and price range (schema.org data in the page head).
+Name, phone, email, socials and the booking link come from the rest of the
+file. Keep the address and hours in step with the Contact section and footer;
+hours use 24-hour times and closed days are left out. Once the site is live,
+check it with Google's Rich Results Test (search.google.com/test/rich-results).
+
+### Analytics
+
+Off until an ID is set in `analytics` in `content.js`:
+
+- `umamiWebsiteId`: Umami (umami.is), cookie-free
+- `ga4MeasurementId`: Google Analytics 4, e.g. `G-XXXXXXXXXX`
+
+Visits are counted automatically, plus three events: `book_tap` (any booking
+link), `call_tap` and `email_tap`.
 
 ---
 
