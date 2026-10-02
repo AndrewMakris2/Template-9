@@ -235,6 +235,8 @@ export const content = {
       sendingLabel: 'Sending…',
       successMessage: 'Thank you. Your note has arrived, and I’ll reply soon.',
       errorMessage: 'Sorry, something went wrong. Please try again, or email me directly.',
+      privacyNote: 'Your details are only used to reply to you.',
+      privacyLabel: 'Privacy policy',
     },
   },
 
@@ -265,6 +267,48 @@ export const content = {
     copyrightName: 'Hana Mori Hair', // TODO: replace with real client content
     copyrightSuffix: 'All rights reserved.',
     backToTopLabel: 'Back to top',
+    privacyLabel: 'Privacy policy',
+  },
+
+  // --------------------------------------------------------------------------
+  // PRIVACY POLICY — the /privacy/ page, linked under the contact form and in
+  // the footer. {business}, {email} and {address} are filled in from the
+  // details above, and the cookies paragraph follows the analytics settings.
+  // Have the client read it and change anything that doesn't match how they work.
+  // --------------------------------------------------------------------------
+  privacy: {
+    title: 'Privacy policy',
+    updatedLabel: 'Last updated',
+    updated: 'October 2, 2026', // TODO: replace with real client content — the date the site goes live
+    backLabel: 'Back to the site',
+    intro: 'This policy explains what {business} collects through this website and how it is used.',
+    sections: [
+      { heading: 'What we collect', paragraphs: ['When you use the contact form, we receive your name, email address, phone number if you give it, and your message. Nothing else is collected through this site.'] },
+      { heading: 'Booking', paragraphs: ['Appointments are booked through a separate booking service. When you book there, that service’s own privacy policy applies.'] },
+      { heading: 'How we use it', paragraphs: ['Only to reply to you and arrange your appointment. We never sell your details or add you to marketing emails without asking first.'] },
+      { heading: 'Where it’s kept', paragraphs: ['Contact form messages are stored by our website host, Netlify, and sent to us by email. We delete them once they’re no longer needed.'] },
+      { heading: 'Cookies and analytics', auto: 'cookies' },
+      { heading: 'Your choices', paragraphs: ['You can ask to see, correct or delete the details we hold about you by emailing {email}.'] },
+      { heading: 'Children', paragraphs: ['This website isn’t aimed at children under 13, and we don’t knowingly collect their details.'] },
+      { heading: 'Contact', paragraphs: ['{business}, {address}. Email: {email}.'] },
+    ],
+    // The cookies section uses one of these, picked from `analytics` below.
+    cookies: {
+      none: 'This website doesn’t use cookies or any tracking.',
+      umami: 'We count visits with Umami, a privacy-friendly analytics tool that doesn’t use cookies or collect personal details.',
+      ga4: 'We use Google Analytics to see how visitors use this site. It sets cookies, which you can block in your browser settings.',
+    },
+  },
+
+  // --------------------------------------------------------------------------
+  // DEMO BANNER — a strip saying this is a demo with sample content. Only for
+  // the public template demos: tools/new-client.sh deletes this block for real
+  // clients (or delete it by hand).
+  // --------------------------------------------------------------------------
+  demo: {
+    text: 'Demo website with sample content, designed by Andrew Makris.',
+    linkLabel: 'See all 10 designs',
+    url: 'https://andrew-makris.netlify.app/#designs',
   },
 
   // --------------------------------------------------------------------------

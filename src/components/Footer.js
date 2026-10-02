@@ -41,7 +41,7 @@ export function Footer({ business, contact, social, footer }) {
       </div>
     </div>
     <div class="mt-16 flex flex-col items-center gap-3 border-t border-line pt-6 text-xs tracking-[0.15em] sm:flex-row sm:justify-between">
-      <p>&copy; ${year} ${esc(footer.copyrightName)}. ${esc(footer.copyrightSuffix)}</p>
+      <p>&copy; ${year} ${esc(footer.copyrightName)}. ${esc(footer.copyrightSuffix)} <a href="/privacy/" class="underline underline-offset-4">${esc(footer.privacyLabel)}</a></p>
       <a href="#top" class="inline-flex items-center gap-2 text-ink hover:text-accent">${esc(footer.backToTopLabel)} ${icon('arrowUp', 'h-3.5 w-3.5')}</a>
     </div>
   </div>

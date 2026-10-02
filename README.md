@@ -108,6 +108,17 @@ file. Keep the address and hours in step with the Contact section and footer;
 hours use 24-hour times and closed days are left out. Once the site is live,
 check it with Google's Rich Results Test (search.google.com/test/rich-results).
 
+### Privacy page and demo banner
+
+Every site has a privacy page at **`/privacy/`**, linked under the contact
+form and in the footer. Its wording is the `privacy` block in `content.js`;
+the business name, email and address fill in automatically, and the cookies
+paragraph follows the `analytics` setting. Set `privacy.updated` to the launch
+date and have the client read it.
+
+The `demo` block adds a "Demo website" strip for the public demo. Delete it for
+a real client (`tools/new-client.sh` in the sales-site repo does this for you).
+
 ### Analytics
 
 Off until an ID is set in `analytics` in `content.js`:

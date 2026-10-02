@@ -20,6 +20,7 @@ import { Testimonials } from './components/Testimonials.js';
 import { Events } from './components/Events.js';
 import { Policies } from './components/Policies.js';
 import { Faq } from './components/Faq.js';
+import { Privacy } from './components/Privacy.js';
 import { Contact } from './components/Contact.js';
 import { Footer } from './components/Footer.js';
 
@@ -91,6 +92,16 @@ function analyticsTags() {
   ];
 }
 
+/** "Demo website" strip for the template demos (content.demo is deleted for real clients). */
+function demoBanner({ fixed = false } = {}) {
+  const { demo } = content;
+  if (!demo) return '';
+  const strip = `${esc(demo.text)} <a href="${esc(demo.url)}" class="font-medium underline underline-offset-4">${esc(demo.linkLabel)}</a>`;
+  return fixed
+    ? `<div class="h-10" aria-hidden="true"></div><div class="fixed inset-x-0 bottom-0 z-40 bg-ink px-4 py-2.5 text-center text-xs text-on-ink">${strip}</div>`
+    : `<div class="bg-ink px-4 py-2.5 text-center text-xs text-on-ink">${strip}</div>`;
+}
+
 /** Mark every booking link so analytics can count "Book" taps (see src/scripts/analytics.js). */
 function tagBookingLinks(html) {
   const href = `href="${esc(content.booking.url)}"`;
@@ -131,6 +142,7 @@ export function renderHead() {
 export function renderBody() {
   return tagBookingLinks([
     Nav(content),
+    demoBanner(),
     `<main id="main">`,
     Hero(content),
     About(content),
@@ -144,6 +156,30 @@ export function renderBody() {
     `</main>`,
     Footer(content),
   ].join('\n'));
+}
+
+/** Head for the /privacy/ page. */
+export function renderPrivacyHead() {
+  const { site, business, privacy } = content;
+  const url = site.url ? `${site.url.replace(/\/$/, '')}/privacy/` : '';
+  return [
+    `<title>${esc(privacy.title)} | ${esc(business.name)}</title>`,
+    `<meta name="description" content="${esc(`${privacy.title} for ${business.name}.`)}" />`,
+    `<link rel="icon" href="${favicon()}" type="image/svg+xml" />`,
+    `<meta name="theme-color" content="${esc(theme.colors.paper)}" />`,
+    url && `<link rel="canonical" href="${esc(url)}" />`,
+    `<link rel="preconnect" href="https://fonts.googleapis.com" />`,
+    `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
+    `<link rel="stylesheet" href="${esc(theme.fonts.googleFontsUrl)}" />`,
+    themeStyles(),
+    ...analyticsTags(),
+  ]
+    .filter(Boolean)
+    .join('\n    ');
+}
+
+export function renderPrivacyBody() {
+  return Privacy(content);
 }
 
 export const lang = content.site.lang || 'en';

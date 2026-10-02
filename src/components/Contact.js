@@ -43,6 +43,7 @@ export function Contact({ contact, booking }) {
           <button type="submit" class="${buttonClasses.solid} disabled:opacity-60" data-submit data-label="${esc(form.submitLabel)}" data-sending-label="${esc(form.sendingLabel)}">${esc(form.submitLabel)}</button>
           <p class="hidden border-l border-accent pl-4 text-base text-ink" role="status" data-form-success>${esc(form.successMessage)}</p>
           <p class="hidden border-l border-accent pl-4 text-base text-accent" role="alert" data-form-error>${esc(form.errorMessage)}</p>
+          <p class="text-sm text-muted">${esc(form.privacyNote)} <a href="/privacy/" class="underline underline-offset-4">${esc(form.privacyLabel)}</a></p>
         </form>
         <aside class="md:col-span-4 md:col-start-9">
           <dl class="divide-y divide-line border-y border-line">
